@@ -1,4 +1,5 @@
 ﻿using LyricsScraperNET.Common;
+using LyricsScraperNET.Extensions;
 using LyricsScraperNET.Models.Requests;
 using LyricsScraperNET.Models.Responses;
 using LyricsScraperNET.Providers.Abstract;

@@ -13,6 +13,7 @@ using LyricsScraperNET.Models.Responses;
 using System.Threading.Tasks;
 using System;
 using Microsoft.Extensions.Logging;
+using LyricsScraperNET.Extensions;
 
 class Program
 {

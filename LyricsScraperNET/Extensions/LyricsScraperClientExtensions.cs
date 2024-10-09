@@ -2,10 +2,9 @@
 using LyricsScraperNET.Providers.Genius;
 using LyricsScraperNET.Providers.LyricFind;
 using LyricsScraperNET.Providers.Models;
-using LyricsScraperNET.Providers.Musixmatch;
 using LyricsScraperNET.Providers.SongLyrics;
 
-namespace LyricsScraperNET
+namespace LyricsScraperNET.Extensions
 {
     public static class LyricsScraperClientExtensions
     {
@@ -18,12 +17,6 @@ namespace LyricsScraperNET
         public static ILyricsScraperClient WithGenius(this ILyricsScraperClient lyricsScraperClient)
         {
             lyricsScraperClient.AddProvider(new GeniusProvider());
-            return lyricsScraperClient;
-        }
-
-        public static ILyricsScraperClient WithMusixmatch(this ILyricsScraperClient lyricsScraperClient)
-        {
-            lyricsScraperClient.AddProvider(new MusixmatchProvider());
             return lyricsScraperClient;
         }
 
@@ -48,7 +41,6 @@ namespace LyricsScraperNET
             return lyricsScraperClient
                 .WithGenius()
                 .WithAZLyrics()
-                .WithMusixmatch()
                 .WithSongLyrics()
                 .WithLyricFind();
         }

@@ -1,4 +1,5 @@
-﻿using LyricsScraperNET.Providers.Models;
+﻿using LyricsScraperNET.Extensions;
+using LyricsScraperNET.Providers.Models;
 using System;
 using System.Linq;
 using Xunit;
