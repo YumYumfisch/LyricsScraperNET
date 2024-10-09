@@ -1,5 +1,4 @@
 ﻿using LyricsScraperNET.Providers.Abstract;
-using LyricsScraperNET.Providers.AZLyrics;
 using LyricsScraperNET.Providers.Genius;
 using LyricsScraperNET.Providers.LyricFind;
 using LyricsScraperNET.Providers.Musixmatch;
@@ -11,8 +10,6 @@ namespace LyricsScraperNET.Configuration
     {
         public const string ConfigurationSectionName = "LyricScraperClient";
 
-        public IExternalProviderOptions AZLyricsOptions { get; set; } = new AZLyricsOptions();
-
         public IExternalProviderOptions GeniusOptions { get; set; } = new GeniusOptions();
 
         public IExternalProviderOptions MusixmatchOptions { get; set; } = new MusixmatchOptions();
@@ -21,10 +18,15 @@ namespace LyricsScraperNET.Configuration
 
         public IExternalProviderOptions LyricFindOptions { get; set; } = new LyricFindOptions();
 
-        public bool IsEnabled => AZLyricsOptions.Enabled
-            || GeniusOptions.Enabled
+        public bool IsEnabled
+        {
+            get
+            {
+                return GeniusOptions.Enabled
             || MusixmatchOptions.Enabled
             || SongLyricsOptions.Enabled
             || LyricFindOptions.Enabled;
+            }
+        }
     }
 }

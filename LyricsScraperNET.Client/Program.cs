@@ -1,18 +1,14 @@
 ﻿using LyricsScraperNET;
 using LyricsScraperNET.Configuration;
-using LyricsScraperNET.Providers.Abstract;
-using LyricsScraperNET.Providers.AZLyrics;
-using LyricsScraperNET.Providers.Genius;
-using LyricsScraperNET.Providers.SongLyrics;
-using LyricsScraperNET.Providers.LyricFind;
+using LyricsScraperNET.Extensions;
 using LyricsScraperNET.Models.Requests;
+using LyricsScraperNET.Models.Responses;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using LyricsScraperNET.Models.Responses;
-using System.Threading.Tasks;
-using System;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 class Program
 {
@@ -27,7 +23,7 @@ class Program
         //string songToSearch = "YYZ";
 
         //// How to configure for ASP.NET applications:
-        var result = ExampleWithHostConfiguration(artistToSearch, songToSearch);
+        SearchResult result = ExampleWithHostConfiguration(artistToSearch, songToSearch);
 
         //// How to configure for a certain external provider:
         //var result = ExampleWithCertainProvider(artistToSearch, songToSearch);
@@ -91,19 +87,17 @@ class Program
         //// Host creation with LyricScraperClient service configuration
         using IHost host = Host.CreateDefaultBuilder()
             .ConfigureServices(services =>
-            {
                 // Setting up LyricScraperClient from configuration that stored in appsettings.json.
                 // Only supported output type as string at the moment.
-                services.AddLyricScraperClientService(configuration: configuration);
-            })
+                services.AddLyricScraperClientService(configuration: configuration))
             .Build();
 
         //// Get instance of LyricScraperClient service 
-        var lyricsScraperClient = host.Services.GetRequiredService<ILyricsScraperClient>();
+        ILyricsScraperClient lyricsScraperClient = host.Services.GetRequiredService<ILyricsScraperClient>();
 
         //// Create request and search 
-        var searchRequest = new ArtistAndSongSearchRequest(artistToSearch, songToSearch);
-        var result = lyricsScraperClient.SearchLyric(searchRequest);
+        ArtistAndSongSearchRequest searchRequest = new ArtistAndSongSearchRequest(artistToSearch, songToSearch);
+        SearchResult result = lyricsScraperClient.SearchLyric(searchRequest);
 
         return result;
     }
@@ -131,7 +125,7 @@ class Program
         //         .WithLyricFind();
 
         // To enable library logging, the LoggerFactory must be configured and passed to the client.
-        var loggerFactory = LoggerFactory.Create(builder =>
+        ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
         {
             builder.AddFilter("Microsoft", LogLevel.Warning)
                    .AddFilter("System", LogLevel.Warning)
@@ -156,8 +150,8 @@ class Program
         // lyricsScraperClient.AddProvider(externalProvider);
 
         //// Create request and search 
-        var searchRequest = new ArtistAndSongSearchRequest(artistToSearch, songToSearch);
-        var result = lyricsScraperClient.SearchLyric(searchRequest);
+        ArtistAndSongSearchRequest searchRequest = new ArtistAndSongSearchRequest(artistToSearch, songToSearch);
+        SearchResult result = lyricsScraperClient.SearchLyric(searchRequest);
 
         return result;
     }

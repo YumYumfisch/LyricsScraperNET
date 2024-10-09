@@ -1,5 +1,4 @@
 ﻿using LyricsScraperNET.Providers.Abstract;
-using LyricsScraperNET.Providers.AZLyrics;
 using LyricsScraperNET.Providers.Genius;
 using LyricsScraperNET.Providers.LyricFind;
 using LyricsScraperNET.Providers.Musixmatch;
@@ -16,10 +15,9 @@ namespace LyricsScraperNET.Configuration
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            var lyricScraperClientConfig = configuration.GetSection(LyricScraperClientConfig.ConfigurationSectionName);
+            IConfigurationSection lyricScraperClientConfig = configuration.GetSection(LyricScraperClientConfig.ConfigurationSectionName);
             if (lyricScraperClientConfig.Exists())
             {
-                services.AddAZLyricsClientService(lyricScraperClientConfig);
                 services.AddGeniusClientService(lyricScraperClientConfig);
                 services.AddMusixmatchService(lyricScraperClientConfig);
                 services.AddSongLyricsService(lyricScraperClientConfig);
@@ -34,26 +32,11 @@ namespace LyricsScraperNET.Configuration
             return services;
         }
 
-        public static IServiceCollection AddAZLyricsClientService(
-            this IServiceCollection services,
-            IConfiguration configuration)
-        {
-            var configurationSection = configuration.GetSection(AZLyricsOptions.ConfigurationSectionName);
-            if (configurationSection.Exists())
-            {
-                services.Configure<AZLyricsOptions>(configurationSection);
-
-                services.AddScoped(typeof(IExternalProvider), typeof(AZLyricsProvider));
-            }
-
-            return services;
-        }
-
         public static IServiceCollection AddGeniusClientService(
            this IServiceCollection services,
            IConfiguration configuration)
         {
-            var configurationSection = configuration.GetSection(GeniusOptions.ConfigurationSectionName);
+            IConfigurationSection configurationSection = configuration.GetSection(GeniusOptions.ConfigurationSectionName);
             if (configurationSection.Exists())
             {
                 services.Configure<GeniusOptions>(configurationSection);
@@ -68,7 +51,7 @@ namespace LyricsScraperNET.Configuration
            this IServiceCollection services,
            IConfiguration configuration)
         {
-            var configurationSection = configuration.GetSection(MusixmatchOptions.ConfigurationSectionName);
+            IConfigurationSection configurationSection = configuration.GetSection(MusixmatchOptions.ConfigurationSectionName);
             if (configurationSection.Exists())
             {
                 services.Configure<MusixmatchOptions>(configurationSection);
@@ -85,7 +68,7 @@ namespace LyricsScraperNET.Configuration
            this IServiceCollection services,
            IConfiguration configuration)
         {
-            var configurationSection = configuration.GetSection(SongLyricsOptions.ConfigurationSectionName);
+            IConfigurationSection configurationSection = configuration.GetSection(SongLyricsOptions.ConfigurationSectionName);
             if (configurationSection.Exists())
             {
                 services.Configure<SongLyricsOptions>(configurationSection);
@@ -100,7 +83,7 @@ namespace LyricsScraperNET.Configuration
            this IServiceCollection services,
            IConfiguration configuration)
         {
-            var configurationSection = configuration.GetSection(LyricFindOptions.ConfigurationSectionName);
+            IConfigurationSection configurationSection = configuration.GetSection(LyricFindOptions.ConfigurationSectionName);
             if (configurationSection.Exists())
             {
                 services.Configure<LyricFindOptions>(configurationSection);

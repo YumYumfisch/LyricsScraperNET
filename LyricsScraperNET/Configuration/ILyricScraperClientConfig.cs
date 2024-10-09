@@ -9,8 +9,6 @@ namespace LyricsScraperNET.Configuration
         /// </summary>
         bool IsEnabled { get; }
 
-        IExternalProviderOptions AZLyricsOptions { get; }
-
         IExternalProviderOptions GeniusOptions { get; }
 
         IExternalProviderOptions MusixmatchOptions { get; }
